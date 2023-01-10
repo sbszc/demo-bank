@@ -1,0 +1,13 @@
+docker volume create demo-bank-volume
+docker run \
+    -d \
+    -p 3306:3306 \
+    --name demo-bank \
+    -e MYSQL_ROOT_PASSWORD=password \
+    --mount src=demo-bank-volume,dst=/var/lib/mysql \
+    mysql
+docker exec -it demo-bank mysql -ppassword
+
+create database demo_bank;
+create user 'dev'@'%' identified by 'password';
+grant all on demo_bank.* to 'dev'@'%';
